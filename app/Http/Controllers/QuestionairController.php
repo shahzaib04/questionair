@@ -15,8 +15,8 @@ class QuestionairController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $data['Questionairs'] = \App\Questionairs::getAll();
-
+        $user_id = Auth::user()->id;
+        $data['Questionairs'] = \App\Questionairs::where('user_id',$user_id)->get();
         return view('view', $data);
     }
 
@@ -64,7 +64,7 @@ class QuestionairController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $data['questionair'] = \App\Questionairs::show($id);
+        $data['questionair'] = \App\Questionairs::find($id);
         return view('edit', $data);
     }
 
@@ -92,7 +92,8 @@ class QuestionairController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        \App\Questionairs::deleteQuestionair($id);
+        $questionair = \App\Questionairs::find($id);
+        $questionair->delete();
         return redirect()->route('questionairs-view');
     }
 
