@@ -92,9 +92,8 @@ class QuestionairController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $questionair = \App\Questionairs::find($id);
-        $questionair->delete();
-        return redirect()->route('questionairs-view');
+         \App\Questionairs::destroy($id);
+         return redirect()->route('questionairs-view');
     }
 
 }
